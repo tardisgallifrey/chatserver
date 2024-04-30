@@ -18,31 +18,41 @@ public class ChatServer implements Runnable {
         return this.threadName;
     }
 
+    public void setThreadName(String name){
+        Thread.currentThread().setName(name);
+    }
+
     // run() method contains the code that is executed by the thread.
     @Override
     public void run() {
 
-        try {
-            s = new ServerSocket(serverPort);
-            System.out.println(this.threadName+" starting...");
-            s.getReuseAddress();
-            s.accept();
-            System.out.println("client connected...");
 
-        } catch (IOException e) {
+        while(true) {
+            try {
+                s = new ServerSocket(serverPort);
+                this.setThreadName(String.valueOf(s.getInetAddress() + " port: " +
+                        String.valueOf(s.getLocalPort())));
+                System.out.println(this.threadName + " starting...");
+                s.getReuseAddress();
+                s.accept();
+                System.out.println("client connected...");
 
-            System.out.println(e.getLocalizedMessage());
-        }
-        finally{
-            if(s != null){
-                try {
-                    s.close();
-                } catch (IOException e) {
-                    System.out.println(e.getLocalizedMessage());
+            } catch (IOException e) {
+
+                System.out.println(e.getLocalizedMessage());
+            } finally {
+                System.out.println("connection with: " + Thread.currentThread().getName());
+                if (s != null) {
+                    try {
+                        s.close();
+                    } catch (IOException e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
                 }
             }
-        }
 
-        System.out.println("Inside : " + Thread.currentThread().getName());
+
+
+        }
     }
 }
