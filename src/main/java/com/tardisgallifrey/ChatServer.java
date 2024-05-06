@@ -8,8 +8,6 @@ public class ChatServer implements Runnable {
     private final String threadName;
     private final int serverPort;
     private ServerSocket s;
-    private Socket msgClient;
-    private MsgHandler handler;
 
     ChatServer(String name, int port){
         this.threadName = name;
@@ -38,10 +36,10 @@ public class ChatServer implements Runnable {
                         String.valueOf(s.getLocalPort())));
 
                 s.getReuseAddress();
-                msgClient = s.accept();
+                Socket msgClient = s.accept();
 
-                System.out.println("From "+msgClient.getInetAddress().getHostAddress());
-                handler = new MsgHandler(msgClient);
+                System.out.println("From "+ msgClient.getInetAddress().getHostAddress());
+                MsgHandler handler = new MsgHandler(msgClient);
                 new Thread(handler).start();
 
             } catch (IOException e) {
