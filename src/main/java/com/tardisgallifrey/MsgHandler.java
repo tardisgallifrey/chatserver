@@ -25,13 +25,16 @@ public class MsgHandler implements Runnable {
         try {
             out = new PrintWriter(clientConn.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientConn.getInputStream()));
+
+
             String message = "";
+            String clientName = in.readLine();
 
             while ((message = in.readLine()) != null) {
 
                 // writing the received message from
                 // client
-                System.out.printf("client says: %s\n", message);
+                System.out.println(clientName +message);
                 out.println(message);
             }
 
