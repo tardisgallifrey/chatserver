@@ -34,8 +34,9 @@ public class MsgHandler implements Runnable {
 
                 // writing the received message from
                 // client
-                System.out.println(clientName +message);
-                out.println(message);
+                System.out.println(clientName+message);
+                out.println("From Server"+message);
+                out.flush();
             }
 
         }

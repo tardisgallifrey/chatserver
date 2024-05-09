@@ -38,7 +38,7 @@ public class ChatServer implements Runnable {
                 s.getReuseAddress();
                 Socket msgClient = s.accept();
 
-                System.out.println("From "+ msgClient.getInetAddress().getHostAddress());
+                System.out.println("Conn from: "+ msgClient.getInetAddress().getHostAddress());
                 MsgHandler handler = new MsgHandler(msgClient);
                 new Thread(handler).start();
 
